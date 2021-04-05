@@ -15,14 +15,34 @@ struct ContentView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
-
+    
+    @State var users:[User] = []
+    
     var body: some View {
         List {
-            ForEach(items) { item in
-                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+            ForEach(users) { user in
+                VStack(alignment: .leading) {
+                    Text(user.name)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    Text(user.email)
+                        .font(.headline)
+                        .fontWeight(.medium)
+                        .foregroundColor(Color.gray)
+                    Text(user.city)
+                        .font(.subheadline)
+                        .fontWeight(.regular)
+                        .foregroundColor(Color.gray)
+                }
             }
             .onDelete(perform: deleteItems)
         }
+        .onAppear {
+            Api().getUsers { (retrivedUsers ) in
+                users.append(contentsOf: retrivedUsers)
+            }
+        }
+        
         .toolbar {
             #if os(iOS)
             EditButton()
@@ -32,8 +52,9 @@ struct ContentView: View {
                 Label("Add Item", systemImage: "plus")
             }
         }
-    }
 
+    }
+    
     private func addItem() {
         withAnimation {
             let newItem = Item(context: viewContext)
