@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 // MARK: - Welcome
 struct User: Codable {
@@ -47,31 +48,15 @@ extension User: Identifiable {
 }
 
 class Api {
-    func getUsers(complitionBlock: @escaping ([User]) -> ()) {
-       let url = NSURL(string:"http://jsonplaceholder.typicode.com/users")
-        guard let requestUrl = url else { return }
-        var request = URLRequest(url: requestUrl as URL)
-        request.httpMethod = "GET"
-        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
-            if let error = error {
-                DispatchQueue.main.async {
-                    print(error)
-                }
-            } else {
-                do {
-                    let users = try JSONDecoder().decode([User].self, from: data!)
-                    DispatchQueue.main.async {
-                        complitionBlock(users)
-                    }
-                } catch let error {
-                    print("JSON Error\(error)")
-                }
-            }
-        }
-        task.resume()
+    func getUsers() -> AnyPublisher<[User], Error> {
+        URLSession.shared
+            .dataTaskPublisher(for: URL(string:"http://jsonplaceholder.typicode.com/users")!)
+            .tryMap({ $0.data })
+            .decode(type: [User].self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
     }
     
-    enum errors: Error{
+    enum Errors: Error{
         case connectionError
         case decodingError(error:Error?)
         case underlyingError(error:Error?)
