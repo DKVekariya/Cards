@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		420C8E34261F397600A95E7F /* UserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420C8E32261F397600A95E7F /* UserDetailViewController.swift */; };
+		420C8E35261F397600A95E7F /* UserDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 420C8E33261F397600A95E7F /* UserDetailViewController.xib */; };
+		420C8E39261F3A1500A95E7F /* UserDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420C8E37261F3A1500A95E7F /* UserDetailCell.swift */; };
+		420C8E3A261F3A1500A95E7F /* UserDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 420C8E38261F3A1500A95E7F /* UserDetailCell.xib */; };
 		42713195261C7DC100B304A5 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42713194261C7DC100B304A5 /* AddView.swift */; };
 		4271319A261C84AD00B304A5 /* UserInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42713198261C84AD00B304A5 /* UserInfo+CoreDataClass.swift */; };
 		4271319B261C84AD00B304A5 /* UserInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42713199261C84AD00B304A5 /* UserInfo+CoreDataProperties.swift */; };
@@ -20,6 +24,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		420C8E32261F397600A95E7F /* UserDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewController.swift; sourceTree = "<group>"; };
+		420C8E33261F397600A95E7F /* UserDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDetailViewController.xib; sourceTree = "<group>"; };
+		420C8E37261F3A1500A95E7F /* UserDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailCell.swift; sourceTree = "<group>"; };
+		420C8E38261F3A1500A95E7F /* UserDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDetailCell.xib; sourceTree = "<group>"; };
 		42713194261C7DC100B304A5 /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 		42713198261C84AD00B304A5 /* UserInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
 		42713199261C84AD00B304A5 /* UserInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -70,6 +78,10 @@
 				4277B797261983CF000F118A /* CardsApp.swift */,
 				4277B799261983CF000F118A /* ContentView.swift */,
 				42713194261C7DC100B304A5 /* AddView.swift */,
+				420C8E32261F397600A95E7F /* UserDetailViewController.swift */,
+				420C8E33261F397600A95E7F /* UserDetailViewController.xib */,
+				420C8E37261F3A1500A95E7F /* UserDetailCell.swift */,
+				420C8E38261F3A1500A95E7F /* UserDetailCell.xib */,
 				42BC0BBF2619F7DF0093E1BD /* User.swift */,
 				4277B79B261983CF000F118A /* Assets.xcassets */,
 				4277B7A5261983CF000F118A /* Info.plist */,
@@ -146,6 +158,8 @@
 			files = (
 				4277B79F261983CF000F118A /* Preview Assets.xcassets in Resources */,
 				4277B79C261983CF000F118A /* Assets.xcassets in Resources */,
+				420C8E35261F397600A95E7F /* UserDetailViewController.xib in Resources */,
+				420C8E3A261F3A1500A95E7F /* UserDetailCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +172,8 @@
 			files = (
 				4277B79A261983CF000F118A /* ContentView.swift in Sources */,
 				4271319E261C853800B304A5 /* Persistence.swift in Sources */,
+				420C8E34261F397600A95E7F /* UserDetailViewController.swift in Sources */,
+				420C8E39261F3A1500A95E7F /* UserDetailCell.swift in Sources */,
 				42713195261C7DC100B304A5 /* AddView.swift in Sources */,
 				4271319B261C84AD00B304A5 /* UserInfo+CoreDataProperties.swift in Sources */,
 				4271319A261C84AD00B304A5 /* UserInfo+CoreDataClass.swift in Sources */,
