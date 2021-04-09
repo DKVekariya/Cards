@@ -28,7 +28,6 @@ struct UserCellView: View {
                     .font(.subheadline)
                     .fontWeight(.regular)
                     .foregroundColor(Color.gray)
-                
             }
             .padding()
             .cornerRadius(10)
@@ -43,7 +42,7 @@ struct ContentView: View {
     @State private var isShowAddUser = false
     @State private var isShowUserDetail = false
     @State var tokens: Set<AnyCancellable> = []
-    
+    @State private var isShowingAlert = false
     var body: some View {
         NavigationView {
             List(users) { (user:UserInfo) in
@@ -55,15 +54,20 @@ struct ContentView: View {
                                 .navigationBarTitle("Details", displayMode: .inline)
                         }
                     }
+                    .cornerRadius(20)
                     .onTapGesture {
                         isShowUserDetail.toggle()
                     }
                     .onLongPressGesture {
-                        delete(user: user)
-                    }.cornerRadius(20)
+                        isShowingAlert.toggle()
+                    }
+                    .alert(isPresented: $isShowingAlert, content: {
+                        Alert(title: Text("Are you sure ?"), message: Text("IFyou want to delete selected user then press \"Delete\", else press \"Cencle\""), primaryButton: .destructive(Text("Delete"), action: {
+                            delete(user: user)
+                        }), secondaryButton: .cancel())
+                    })
             }.listStyle(GroupedListStyle())
-            .cornerRadius(8)
-            .navigationBarTitle("User")
+            .navigationBarTitle("User", displayMode: .inline)
             .navigationBarItems(leading: EditButton(),
                                 trailing: Button("Add") {
                                     self.isShowAddUser.toggle()
@@ -75,7 +79,7 @@ struct ContentView: View {
                 print(com)
             } receiveValue: { (users) in
                 self.saveUserToCoreData(users)
-                //deleteAllRecords()
+//                deleteAllRecords()
             }.store(in: &tokens)
             
         }
@@ -84,17 +88,23 @@ struct ContentView: View {
         }
     }
     
-    private func saveUserToCoreData(_ users:[Api.User]) {
-        for user in users {
-            let newUser = UserInfo(context: self.context)
-            newUser.name = user.name
-            newUser.email = user.email
-            newUser.city = user.city
-            do {
-                try self.context.save()
-            } catch {
-                print("user not saved \(error.localizedDescription)")
+    private func saveUserToCoreData(_ usersToSave:[Api.User]) {
+        let coreUserName = users.map({$0.name})
+        for user in usersToSave {
+            if coreUserName.contains(user.name) {
+                print("coredata allreay contain \(user.name)")
+            } else {
+                let newUser = UserInfo(context: self.context)
+                newUser.name = user.name
+                newUser.email = user.email
+                newUser.city = user.city
+                do {
+                    try self.context.save()
+                } catch {
+                    print("user not saved \(error.localizedDescription)")
+                }
             }
+            
             
         }
     }
