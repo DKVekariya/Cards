@@ -50,6 +50,8 @@ extension UserDetailViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! UserDetailCell
         let user = users[indexPath.item]
         cell.nameLabel.text = user.name
+        cell.emailLabel.text = user.email
+        cell.cityLabel.text = user.city
         if indexPath.item % 2 == 0 {
             cell.backgroundColor = .blue
         } else {

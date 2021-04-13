@@ -18,6 +18,8 @@ struct PersistenceController {
             newUser.name = ""
             newUser.email = ""
             newUser.city = ""
+            newUser.username = ""
+            newUser.phone = ""
         }
         do {
             try context.save()

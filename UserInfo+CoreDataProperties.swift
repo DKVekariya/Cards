@@ -2,7 +2,7 @@
 //  UserInfo+CoreDataProperties.swift
 //  Cards
 //
-//  Created by Divyesh Vekariya on 06/04/21.
+//  Created by Divyesh Vekariya on 12/04/21.
 //
 //
 
@@ -19,6 +19,8 @@ extension UserInfo {
     @NSManaged public var city: String?
     @NSManaged public var email: String?
     @NSManaged public var name: String?
+    @NSManaged public var username: String?
+    @NSManaged public var phone: String?
 
 }
 
