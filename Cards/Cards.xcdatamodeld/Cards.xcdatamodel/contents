@@ -4,8 +4,10 @@
         <attribute name="city" optional="YES" attributeType="String"/>
         <attribute name="email" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="phone" optional="YES" attributeType="String"/>
+        <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="UserInfo" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="UserInfo" positionX="-63" positionY="-18" width="128" height="104"/>
     </elements>
 </model>

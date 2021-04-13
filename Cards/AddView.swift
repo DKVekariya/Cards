@@ -17,6 +17,8 @@ struct AddView: View {
     @State private var name = ""
     @State private var email = ""
     @State private var city = ""
+    @State private var username = ""
+    @State private var phone = ""
     @State private var isAlert = false
     
     var body: some View {
@@ -28,6 +30,11 @@ struct AddView: View {
                     TextField("Enter email", text: $email)
                         .disableAutocorrection(true)
                     TextField("Enter city", text: $city)
+                        .disableAutocorrection(true)
+                    TextField("Enter usernsme", text: $username)
+                        .disableAutocorrection(true)
+                    TextField("Enter phone number", text: $phone)
+                        .disableAutocorrection(true)
                 }
                 .alert(isPresented: $isAlert) { () -> Alert in
                     Alert(title: Text("Alert"), message: Text("No text field should be empty"), dismissButton: .default(Text("Ok")))
@@ -53,7 +60,9 @@ struct AddView: View {
     func saveUser() {
         if self.name == "" ||
             self.email == "" ||
-            self.city == "" {
+            self.city == "" ||
+            self.username == "" ||
+            self.phone == "" {
             self.isAlert = true
             return
         }
@@ -61,6 +70,9 @@ struct AddView: View {
         userInfo.name = self.name
         userInfo.email = self.email
         userInfo.city = self.city
+        userInfo.username = self.username
+        userInfo.phone = self.phone
+        
         do {
             try self.context.save()
         } catch {

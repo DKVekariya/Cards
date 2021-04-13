@@ -12,14 +12,14 @@
 		420C8E39261F3A1500A95E7F /* UserDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420C8E37261F3A1500A95E7F /* UserDetailCell.swift */; };
 		420C8E3A261F3A1500A95E7F /* UserDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 420C8E38261F3A1500A95E7F /* UserDetailCell.xib */; };
 		42713195261C7DC100B304A5 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42713194261C7DC100B304A5 /* AddView.swift */; };
-		4271319A261C84AD00B304A5 /* UserInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42713198261C84AD00B304A5 /* UserInfo+CoreDataClass.swift */; };
-		4271319B261C84AD00B304A5 /* UserInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42713199261C84AD00B304A5 /* UserInfo+CoreDataProperties.swift */; };
 		4271319E261C853800B304A5 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4271319D261C853800B304A5 /* Persistence.swift */; };
 		4277B798261983CF000F118A /* CardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4277B797261983CF000F118A /* CardsApp.swift */; };
 		4277B79A261983CF000F118A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4277B799261983CF000F118A /* ContentView.swift */; };
 		4277B79C261983CF000F118A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4277B79B261983CF000F118A /* Assets.xcassets */; };
 		4277B79F261983CF000F118A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4277B79E261983CF000F118A /* Preview Assets.xcassets */; };
 		4277B7A4261983CF000F118A /* Cards.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4277B7A2261983CF000F118A /* Cards.xcdatamodeld */; };
+		42B1AD0526246ABD0015810F /* UserInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B1AD0326246ABD0015810F /* UserInfo+CoreDataClass.swift */; };
+		42B1AD0626246ABD0015810F /* UserInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B1AD0426246ABD0015810F /* UserInfo+CoreDataProperties.swift */; };
 		42BC0BC02619F7DF0093E1BD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BC0BBF2619F7DF0093E1BD /* User.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,8 +29,6 @@
 		420C8E37261F3A1500A95E7F /* UserDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailCell.swift; sourceTree = "<group>"; };
 		420C8E38261F3A1500A95E7F /* UserDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDetailCell.xib; sourceTree = "<group>"; };
 		42713194261C7DC100B304A5 /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
-		42713198261C84AD00B304A5 /* UserInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
-		42713199261C84AD00B304A5 /* UserInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4271319D261C853800B304A5 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		4277B794261983CF000F118A /* Cards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4277B797261983CF000F118A /* CardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsApp.swift; sourceTree = "<group>"; };
@@ -39,6 +37,8 @@
 		4277B79E261983CF000F118A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4277B7A3261983CF000F118A /* Cards.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Cards.xcdatamodel; sourceTree = "<group>"; };
 		4277B7A5261983CF000F118A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42B1AD0326246ABD0015810F /* UserInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		42B1AD0426246ABD0015810F /* UserInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		42BC0BBF2619F7DF0093E1BD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -56,8 +56,8 @@
 		4277B78B261983CF000F118A = {
 			isa = PBXGroup;
 			children = (
-				42713198261C84AD00B304A5 /* UserInfo+CoreDataClass.swift */,
-				42713199261C84AD00B304A5 /* UserInfo+CoreDataProperties.swift */,
+				42B1AD0326246ABD0015810F /* UserInfo+CoreDataClass.swift */,
+				42B1AD0426246ABD0015810F /* UserInfo+CoreDataProperties.swift */,
 				4277B796261983CF000F118A /* Cards */,
 				4277B795261983CF000F118A /* Products */,
 			);
@@ -77,12 +77,12 @@
 				4271319D261C853800B304A5 /* Persistence.swift */,
 				4277B797261983CF000F118A /* CardsApp.swift */,
 				4277B799261983CF000F118A /* ContentView.swift */,
+				42BC0BBF2619F7DF0093E1BD /* User.swift */,
 				42713194261C7DC100B304A5 /* AddView.swift */,
 				420C8E32261F397600A95E7F /* UserDetailViewController.swift */,
 				420C8E33261F397600A95E7F /* UserDetailViewController.xib */,
 				420C8E37261F3A1500A95E7F /* UserDetailCell.swift */,
 				420C8E38261F3A1500A95E7F /* UserDetailCell.xib */,
-				42BC0BBF2619F7DF0093E1BD /* User.swift */,
 				4277B79B261983CF000F118A /* Assets.xcassets */,
 				4277B7A5261983CF000F118A /* Info.plist */,
 				4277B7A2261983CF000F118A /* Cards.xcdatamodeld */,
@@ -170,13 +170,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42B1AD0626246ABD0015810F /* UserInfo+CoreDataProperties.swift in Sources */,
 				4277B79A261983CF000F118A /* ContentView.swift in Sources */,
 				4271319E261C853800B304A5 /* Persistence.swift in Sources */,
+				42B1AD0526246ABD0015810F /* UserInfo+CoreDataClass.swift in Sources */,
 				420C8E34261F397600A95E7F /* UserDetailViewController.swift in Sources */,
 				420C8E39261F3A1500A95E7F /* UserDetailCell.swift in Sources */,
 				42713195261C7DC100B304A5 /* AddView.swift in Sources */,
-				4271319B261C84AD00B304A5 /* UserInfo+CoreDataProperties.swift in Sources */,
-				4271319A261C84AD00B304A5 /* UserInfo+CoreDataClass.swift in Sources */,
 				4277B798261983CF000F118A /* CardsApp.swift in Sources */,
 				42BC0BC02619F7DF0093E1BD /* User.swift in Sources */,
 				4277B7A4261983CF000F118A /* Cards.xcdatamodeld in Sources */,

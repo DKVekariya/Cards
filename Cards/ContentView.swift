@@ -11,15 +11,27 @@ import Combine
 
 struct UserCellView: View {
     @State var user:UserInfo
+    @Binding var expandedUser:UserInfo?
+    
+    var action: () -> Void
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .leading){
             Rectangle()
+                .size(UIScreen.main.bounds.size)
             VStack(alignment: .leading) {
-                Text(user.name ?? "")
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
+                HStack {
+                    Text(user.name ?? "")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                    Spacer()
+                    Image(systemName: "chevron.down").onTapGesture {
+                        action()
+                    }
+                    .foregroundColor(.blue)
+                    
+                }
                 Text(user.email ?? "")
                     .font(.headline)
                     .fontWeight(.medium)
@@ -28,9 +40,19 @@ struct UserCellView: View {
                     .font(.subheadline)
                     .fontWeight(.regular)
                     .foregroundColor(Color.gray)
+                if user == expandedUser {
+                    Text(user.username ?? "")
+                        .font(.subheadline)
+                        .fontWeight(.regular)
+                        .foregroundColor(Color.gray)
+                    Text(user.phone ?? "")
+                        .font(.subheadline)
+                        .fontWeight(.regular)
+                        .foregroundColor(Color.gray)
+                }
+                
             }
             .padding()
-            .cornerRadius(10)
         }
     }
 }
@@ -43,31 +65,13 @@ struct ContentView: View {
     @State private var isShowUserDetail = false
     @State var tokens: Set<AnyCancellable> = []
     @State private var isShowingAlert = false
+    @State var expandedUser:UserInfo? = .none
+    
     var body: some View {
         NavigationView {
             List(users) { (user:UserInfo) in
-                UserCellView(user: user)
-                    .fullScreenCover(isPresented: $isShowUserDetail) {
-                        NavigationView {
-                            UserDetailView(users: users.map({ $0 }), startPosithion: users.firstIndex(of: user))
-                                .navigationBarItems(leading: Button("Cancel", action: { isShowUserDetail = false }))
-                                .navigationBarTitle("Details", displayMode: .inline)
-                        }
-                    }
-                    .cornerRadius(20)
-                    .onTapGesture {
-                        isShowUserDetail.toggle()
-                    }
-                    .onLongPressGesture {
-                        isShowingAlert.toggle()
-                    }
-                    .alert(isPresented: $isShowingAlert, content: {
-                        Alert(title: Text("Are you sure ?"), message: Text("IFyou want to delete selected user then press \"Delete\", else press \"Cencle\""), primaryButton: .destructive(Text("Delete"), action: {
-                            delete(user: user)
-                        }), secondaryButton: .cancel())
-                    })
-            }.listStyle(GroupedListStyle())
-            .navigationBarTitle("User", displayMode: .inline)
+                getUserCell(user)
+            }.navigationBarTitle("User", displayMode: .inline)
             .navigationBarItems(leading: EditButton(),
                                 trailing: Button("Add") {
                                     self.isShowAddUser.toggle()
@@ -79,7 +83,7 @@ struct ContentView: View {
                 print(com)
             } receiveValue: { (users) in
                 self.saveUserToCoreData(users)
-//                deleteAllRecords()
+                //                deleteAllRecords()
             }.store(in: &tokens)
             
         }
@@ -87,6 +91,44 @@ struct ContentView: View {
             AddView(isShow: $isShowAddUser).environment(\.managedObjectContext, self.context)
         }
     }
+    
+    func getUserDetail(_ user:UserInfo) -> some View {
+        NavigationView {
+            UserDetailView(users: users.map({ $0 }), startPosithion: users.firstIndex(of: user))
+                .navigationBarItems(leading: Button("Cancel", action: { isShowUserDetail = false }))
+                .navigationBarTitle("Details", displayMode: .inline)
+        }
+    }
+    
+    
+    func getUserCell(_ user:UserInfo) -> some View {
+        UserCellView(user: user, expandedUser: $expandedUser) {
+            withAnimation {
+                if expandedUser == user {
+                    expandedUser = .none
+                } else {
+                    expandedUser = user
+                }
+                
+            }
+        }
+        .fullScreenCover(isPresented: $isShowUserDetail) {
+            getUserDetail(user)
+        }
+        .cornerRadius(20)
+        .onTapGesture {
+            isShowUserDetail.toggle()
+        }
+        .onLongPressGesture {
+            isShowingAlert.toggle()
+        }
+        .alert(isPresented: $isShowingAlert, content: {
+            Alert(title: Text("Are you sure ?"), message: Text("IFyou want to delete selected user then press \"Delete\", else press \"Cencle\""), primaryButton: .destructive(Text("Delete"), action: {
+                delete(user: user)
+            }), secondaryButton: .cancel())
+        })
+    }
+    
     
     private func saveUserToCoreData(_ usersToSave:[Api.User]) {
         let coreUserName = users.map({$0.name})
@@ -98,6 +140,9 @@ struct ContentView: View {
                 newUser.name = user.name
                 newUser.email = user.email
                 newUser.city = user.city
+                newUser.username = user.username
+                newUser.phone = user.phone
+                
                 do {
                     try self.context.save()
                 } catch {

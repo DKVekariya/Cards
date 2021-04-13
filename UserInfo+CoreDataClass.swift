@@ -2,7 +2,7 @@
 //  UserInfo+CoreDataClass.swift
 //  Cards
 //
-//  Created by Divyesh Vekariya on 06/04/21.
+//  Created by Divyesh Vekariya on 12/04/21.
 //
 //
 
