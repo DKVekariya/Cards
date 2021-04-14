@@ -52,6 +52,8 @@ extension UserDetailViewController: UICollectionViewDataSource {
         cell.nameLabel.text = user.name
         cell.emailLabel.text = user.email
         cell.cityLabel.text = user.city
+        cell.usernameLabel.text = user.username
+        cell.phoneLabel.text = user.phone
         if indexPath.item % 2 == 0 {
             cell.backgroundColor = .blue
         } else {
