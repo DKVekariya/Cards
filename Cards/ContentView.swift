@@ -8,17 +8,19 @@
 import SwiftUI
 import CoreData
 import Combine
-
+private let screenSize = UIScreen.main.bounds.size
 struct UserCellView: View {
     @State var user:UserInfo
     @Binding var expandedUser:UserInfo?
+    @State var isCellExtended = false
+    var image = ""
     
     var action: () -> Void
     
     var body: some View {
         ZStack(alignment: .leading){
             Rectangle()
-                .size(UIScreen.main.bounds.size)
+                .size(screenSize)
             VStack(alignment: .leading) {
                 HStack {
                     Text(user.name ?? "")
@@ -26,11 +28,11 @@ struct UserCellView: View {
                         .fontWeight(.bold)
                         .foregroundColor(.white)
                     Spacer()
-                    Image(systemName: "chevron.down").onTapGesture {
+                    Image(systemName: isCellExtended ? "chevron.up" : "chevron.down" ).onTapGesture {
                         action()
+                        isCellExtended.toggle()
                     }
                     .foregroundColor(.blue)
-                    
                 }
                 Text(user.email ?? "")
                     .font(.headline)
@@ -50,17 +52,21 @@ struct UserCellView: View {
                         .fontWeight(.regular)
                         .foregroundColor(Color.gray)
                 }
-                
-            }
-            .padding()
+            }.padding()
         }
     }
 }
 
 struct ContentView: View {
+    //remove space between list nad navigation bar
+    init() {
+        UITableView.appearance().contentInset.top = -35
+    }
+    
     @Environment(\.managedObjectContext) var context
     @FetchRequest(entity: UserInfo.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \UserInfo.name, ascending: true)])
     var users: FetchedResults<UserInfo>
+    
     @State private var isShowAddUser = false
     @State private var isShowUserDetail = false
     @State var tokens: Set<AnyCancellable> = []
@@ -68,27 +74,71 @@ struct ContentView: View {
     @State var expandedUser:UserInfo? = .none
     
     var body: some View {
+        
+        if users.count != 0 {
+            userListView()
+        } else {
+            emptyView()
+        }
+    }
+    
+    func loadUser() {
+        Api().getUsers().sink { (com) in
+            print(com)
+        } receiveValue: { (users) in
+            self.saveUserToCoreData(users)
+        }.store(in: &tokens)
+    }
+    
+    func userListView() -> some View {
         NavigationView {
             List(users) { (user:UserInfo) in
                 getUserCell(user)
-            }.navigationBarTitle("User", displayMode: .inline)
-            .navigationBarItems(leading: EditButton(),
-                                trailing: Button("Add") {
-                                    self.isShowAddUser.toggle()
-                                })
-        }
-        .onAppear {
+            }//.ignoresSafeArea(.all)
+            .listStyle(GroupedListStyle())
+            .navigationBarTitle("User", displayMode: .inline)
+            .navigationBarItems(leading: Button(action:{
+                loadUser()
+            }, label:{Image(systemName: "arrow.clockwise")}), trailing: Button("Add") {
+                self.isShowAddUser.toggle()
+            })
+        }.onAppear {
             print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-            Api().getUsers().sink { (com) in
-                print(com)
-            } receiveValue: { (users) in
-                self.saveUserToCoreData(users)
-                //                deleteAllRecords()
-            }.store(in: &tokens)
-            
+//            deleteAllRecords()
         }
         .sheet(isPresented: $isShowAddUser) {
             AddView(isShow: $isShowAddUser).environment(\.managedObjectContext, self.context)
+        }
+    }
+    
+    func emptyView() -> some View {
+        ZStack {
+            //Background
+            Rectangle()
+                .size(screenSize)
+                .foregroundColor(Color.init( red: 200/255, green: 143/255, blue: 32/255, opacity: 1))
+            .edgesIgnoringSafeArea(.all)
+            Rectangle()
+                .size(screenSize)
+                .rotationEffect(Angle(degrees: 59))
+                .foregroundColor(Color.init(red: 228/255, green: 195/255, blue: 76/255, opacity: 0.8))
+            .edgesIgnoringSafeArea(.all)
+            Rectangle()
+                .size(screenSize)
+                .rotationEffect(Angle(degrees: -59))
+                .foregroundColor(Color.init(red: 228/255, green: 195/255, blue: 76/255, opacity: 0.8))
+            .edgesIgnoringSafeArea(.all)
+            
+            VStack(alignment: .center) {
+                Text("Press to load user")
+                    .foregroundColor(.black)
+                Image(systemName: "arrow.clockwise")
+                    .resizable()
+                    .frame(width: 60, height: 60, alignment: .center)
+                    .onTapGesture {
+                        loadUser()
+                    }
+            }
         }
     }
     
@@ -100,7 +150,6 @@ struct ContentView: View {
         }
     }
     
-    
     func getUserCell(_ user:UserInfo) -> some View {
         UserCellView(user: user, expandedUser: $expandedUser) {
             withAnimation {
@@ -109,13 +158,12 @@ struct ContentView: View {
                 } else {
                     expandedUser = user
                 }
-                
             }
         }
         .fullScreenCover(isPresented: $isShowUserDetail) {
             getUserDetail(user)
         }
-        .cornerRadius(20)
+        .cornerRadius(10)
         .onTapGesture {
             isShowUserDetail.toggle()
         }
@@ -123,12 +171,11 @@ struct ContentView: View {
             isShowingAlert.toggle()
         }
         .alert(isPresented: $isShowingAlert, content: {
-            Alert(title: Text("Are you sure ?"), message: Text("IFyou want to delete selected user then press \"Delete\", else press \"Cencle\""), primaryButton: .destructive(Text("Delete"), action: {
+            Alert(title: Text("Are you sure ?"), message: Text("If you want to delete selected user then press \"Delete\", else press \"Cencle\""), primaryButton: .destructive(Text("Delete"), action: {
                 delete(user: user)
             }), secondaryButton: .cancel())
         })
     }
-    
     
     private func saveUserToCoreData(_ usersToSave:[Api.User]) {
         let coreUserName = users.map({$0.name})
@@ -149,8 +196,6 @@ struct ContentView: View {
                     print("user not saved \(error.localizedDescription)")
                 }
             }
-            
-            
         }
     }
     
@@ -164,14 +209,12 @@ struct ContentView: View {
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
-        
     }
     
     private func deleteAllRecords() {
         
         let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "UserInfo")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
-        
         do {
             try context.execute(deleteRequest)
             try context.save()
